@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Verificación de Deuda</title>
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            margin: 0;
+            color: #e74c3c;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            background: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .btn-pay {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+      dal()">&times;</button>      width: 100%;
+        }
+
+        .btn-pay:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal -->
+    <div id="debtModal" class="modal-overlay">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2 class="modal-title">Aviso de Deuda Pendiente</h2>
+            </div>
+            <div class="modal-body">
+                <p id="debtMessage"></p>
+                <p  id="debtAmount"></p>
+                <p id="dueDate"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar deuda al cargar la página
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Simular un ID de usuario
+            const userId = 'user123';
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/check-debt/${userId}`);
+                const data = await response.json();
+
+                if (data.hasDebt) {
+                    showModal(data);
+                }
+            } catch (error) {
+                console.error('Error al verificar deuda:', error);
+            }
+        });
+
+        function showModal(debtData) {
+            const modal = document.getElementById('debtModal');
+            const message = document.getElementById('debtMessage');
+            const amount = document.getElementById('debtAmount');
+            const dueDate = document.getElementById('dueDate');
+
+            message.textContent = 'Tienes una deuda pendiente.';
+
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('debtModal').style.display = 'none';
+        }
+
+        function handlePayment() {
+            // Aquí irían las funciones para procesar el pago
+            alert('Redirigiendo al sistema de pagos...');
+        }
+
+        // Cerrar modal si se hace clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('debtModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
