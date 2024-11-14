@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 
 app.get('/api/check-debt/:userId', (req, res) => {
     const mockData = {
-        hasDebt: true,
+        hasDebt: false,
         amount: 1500,
         dueDate: '2024-11-20'
     };
