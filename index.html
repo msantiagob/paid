@@ -93,7 +93,7 @@
             const userId = 'user123';
 
             try {
-                const response = await fetch(`http://localhost:3000/api/check-debt/${userId}`);
+                const response = await fetch(`https://paid-production.up.railway.app/api/check-debt/${userId}`);
                 const data = await response.json();
 
                 if (data.hasDebt) {
